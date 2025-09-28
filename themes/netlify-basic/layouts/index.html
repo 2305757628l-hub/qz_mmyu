@@ -1,31 +1,1046 @@
-{{ define "main" }}
-<svg id="background" width='1728' height='1235' viewBox="0 0 1728 1235" fill='none' xmlns='http://www.w3.org/2000/svg'><g opacity='0.75' filter='url(#filter0_f_39_143)'><circle cy='1000' r='264' fill='url(#paint0_linear_39_143)'/></g><g opacity='0.65' filter='url(#filter1_f_39_143)'><circle cx='1720' cy='264' r='379' fill='url(#paint1_linear_39_143)'/></g><defs><filter id='filter0_f_39_143' x='-485' y='515' width='970' height='970' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'><feFlood flood-opacity='0' result='BackgroundImageFix'/><feBlend mode='normal' in='SourceGraphic' in2='BackgroundImageFix' result='shape'/><feGaussianBlur stdDeviation='110.5' result='effect1_foregroundBlur_39_143'/></filter><filter id='filter1_f_39_143' x='1120' y='-336' width='1200' height='1200' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'><feFlood flood-opacity='0' result='BackgroundImageFix'/><feBlend mode='normal' in='SourceGraphic' in2='BackgroundImageFix' result='shape'/><feGaussianBlur stdDeviation='110.5' result='effect1_foregroundBlur_39_143'/></filter><linearGradient id='paint0_linear_39_143' x1='196.5' y1='902' x2='-2.55853e-05' y2='1264' gradientUnits='userSpaceOnUse'><stop stop-color="var(--bttm-left-blur-1)"/><stop offset='1' stop-color="var(--bttm-left-blur-2)"/></linearGradient><linearGradient id='paint1_linear_39_143' x1='1720' y1='-115' x2='1720' y2='643' gradientUnits='userSpaceOnUse'><stop stop-color="var(--top-right-blur-1)"/><stop offset='1' stop-color="var(--top-right-blur-2)" /></linearGradient></defs></svg>     
-<div id="content">
-  <div class="header">
-    <h1>Quickstart Template</h1>
-    <div class="logo">
-      <img src="https://user-images.githubusercontent.com/43764894/223559747-e9d7f19d-91bf-46a9-a0cb-8d6a40d3cfa3.png" alt="netlify + hugo banner" role="presentation">
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>祁舟的主页</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+
+        :root {
+            --primary-bg: #121212;
+            --secondary-bg: #1e1e1e;
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --accent-color: #ffffff;
+            --border-color: #333;
+            --red-1: #DC1F33;
+            --red-2: #D11D30;
+            --red-3: #CA1D30;
+            --red-4: #E52034;
+            --red-5: #F22439;
+            --pink-1: #FFC0CB; /* LightPink */
+            --pink-2: #FF69B4; /* HotPink */
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: var(--primary-bg);
+            min-height: 100vh;
+        }
+
+        /* --- Header Section --- */
+        .header {
+            position: relative;
+            height: 250px;
+            background-image: url('https://files.catbox.moe/6el5eu.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .profile-info {
+            position: absolute;
+            bottom: -60px;
+            left: 20px;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        .avatar-container {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+        }
+
+        .avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid var(--accent-color);
+            object-fit: cover;
+        }
+
+        .avatar-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            border: 2px solid #000;
+            box-shadow: 0 0 5px #000, 0 0 10px #000, 0 0 15px #fff, 0 0 20px #fff;
+            animation: glow 2s infinite ease-in-out;
+            pointer-events: none;
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px #000, 0 0 10px #000, 0 0 15px #fff, 0 0 20px #fff; }
+            50% { box-shadow: 0 0 10px #000, 0 0 15px #000, 0 0 25px #fff, 0 0 35px #fff; }
+        }
+
+        .user-details {
+            margin-left: 15px;
+            margin-bottom: 10px;
+        }
+
+        .user-name {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .user-id {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* --- Bio & Stats Section --- */
+        .bio-section {
+            padding: 80px 20px 20px 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .signature {
+            font-size: 15px;
+            margin-bottom: 15px;
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+        }
+
+        .stat {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .stat-number {
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        
+        .special-follow {
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--text-secondary);
+        }
+        .special-follow:hover {
+            text-decoration: underline;
+        }
+
+        /* --- Feed Section --- */
+        .feed {
+            width: 100%;
+        }
+
+        .post {
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px;
+        }
+
+        .post-header {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+        
+        .post-avatar-container {
+            position: relative;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        
+        .post-avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .post-avatar-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            border: 1px solid #000;
+            box-shadow: 0 0 3px #000, 0 0 6px #000, 0 0 9px #fff, 0 0 12px #fff;
+            animation: glow 2s infinite ease-in-out;
+        }
+
+        .post-user-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .post-user-name {
+            font-weight: 700;
+        }
+        
+        .post-user-id {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .post-content {
+            margin-bottom: 15px;
+        }
+        
+        .post-text {
+            white-space: pre-wrap;
+            line-height: 1.6;
+            font-size: 16px;
+        }
+        
+        .post-text .user-mention {
+            color: #b0c4de;
+            cursor: default;
+        }
+        
+        .post-text a.interactive-link {
+            color: #6495ED;
+            text-decoration: none;
+        }
+        .post-text a.interactive-link:hover {
+            text-decoration: underline;
+        }
+
+        .post-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 5px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+        
+        .post-image {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            aspect-ratio: 1/1;
+        }
+        
+        .post-footer {
+            display: flex;
+            justify-content: space-around;
+            padding-top: 10px;
+            color: var(--text-secondary);
+        }
+        
+        .footer-action {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .footer-action:hover {
+            color: var(--accent-color);
+        }
+        
+        .footer-action svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+        
+        .footer-action.liked svg {
+            fill: #e0245e;
+            color: #e0245e;
+        }
+        
+        .footer-action.liked {
+            color: #e0245e;
+        }
+
+        /* --- Comments Section --- */
+        .comments-section {
+            display: none;
+            padding: 10px 20px 0;
+            background-color: var(--secondary-bg);
+        }
+        
+        .comment {
+            display: flex;
+            margin-bottom: 15px;
+        }
+        
+        .comment-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            margin-right: 10px;
+            object-fit: cover;
+        }
+        
+        .comment-body {
+            flex-grow: 1;
+        }
+        
+        .comment-user-name {
+            font-weight: 500;
+            font-size: 14px;
+            color: #b0c4de;
+        }
+        
+        .comment-text {
+            font-size: 14px;
+            line-height: 1.5;
+            color: var(--text-primary);
+        }
+        
+        .comment-input-area {
+            display: flex;
+            padding: 10px 20px;
+            border-top: 1px solid var(--border-color);
+            background-color: var(--secondary-bg);
+        }
+        
+        .comment-input {
+            flex-grow: 1;
+            background-color: var(--primary-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 8px 12px;
+            color: var(--text-primary);
+            font-size: 14px;
+            margin-right: 10px;
+        }
+        
+        .comment-submit-btn {
+            background-color: var(--accent-color);
+            color: var(--primary-bg);
+            border: none;
+            border-radius: 15px;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        /* --- Modal & Popups --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            background-color: var(--secondary-bg);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        .modal-content p {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        /* --- Interactive Choice Modal --- */
+        .choice-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            flex-direction: column;
+        }
+        
+        .choice-modal-content {
+            background-color: var(--primary-bg);
+            padding: 30px 40px;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+            transition: opacity 0.5s;
+        }
+
+        .choice-modal-content.sad-intro-box {
+            animation: flash-box-to-red 3s forwards;
+        }
+
+        @keyframes flash-box-to-red {
+            0% { background-color: var(--primary-bg); border-color: var(--border-color); opacity: 1; }
+            10% { background-color: var(--red-1); border-color: var(--red-1); } /* Turns red */
+            85% { background-color: var(--red-1); border-color: var(--red-1); opacity: 1; transform: scale(1); } /* Stays red */
+            95% { opacity: 0; transform: scale(1.1); } /* Flash and disappear */
+            100% { opacity: 0; transform: scale(1.1); }
+        }
+
+        .choice-question {
+            font-size: 18px;
+            margin-bottom: 25px;
+            transition: color 0.3s;
+        }
+
+        .choice-question.sad-intro-text {
+            font-weight: bold;
+            color: var(--text-primary);
+            animation: change-text-to-red 3s forwards;
+        }
+
+        @keyframes change-text-to-red {
+             0% { color: var(--text-primary); }
+             10%, 100% { color: #000; } /* Text becomes black on red bg */
+        }
+        
+        .choice-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .choice-btn {
+            padding: 10px 25px;
+            border: 1px solid var(--accent-color);
+            background-color: transparent;
+            color: var(--accent-color);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .choice-btn:hover {
+            background-color: var(--accent-color);
+            color: var(--primary-bg);
+        }
+        
+        #choice-btn-like.enlarge {
+            transform: scale(1.2);
+            background-color: #ff4d6d;
+            border-color: #ff4d6d;
+            font-weight: bold;
+        }
+
+        #final-choice-btn {
+            padding: 20px 50px;
+            font-size: 24px;
+            font-weight: bold;
+            background-color: var(--red-1);
+            color: black;
+            border: 2px solid black;
+            box-shadow: 0 0 15px var(--red-1);
+            animation: final-btn-breathe 2s infinite ease-in-out;
+        }
+
+        @keyframes final-btn-breathe {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 15px var(--red-1); }
+            50% { transform: scale(1.2); box-shadow: 0 0 30px var(--red-4); }
+        }
+
+        /* --- Danmaku System --- */
+        .danmaku-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 2001;
+            overflow: hidden;
+        }
+        
+        .plea-danmaku-container {
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 100px;
+            pointer-events: none;
+            z-index: 2002;
+        }
+
+        .plea-danmaku-item {
+            position: absolute;
+            opacity: 0;
+            animation: plea-flicker 2s infinite;
+        }
+
+        .plea-danmaku-item.gif { width: 60px; height: 60px; }
+        @keyframes plea-flicker {
+            0%, 100% { opacity: 0; transform: scale(0.9); }
+            25% { opacity: 1; transform: scale(1.05); }
+            50% { opacity: 0.5; transform: scale(1); }
+            75% { opacity: 1; transform: scale(0.95); }
+        }
+
+        /* --- HORROR/HAPPY DANMAKU STYLES --- */
+        .danmaku-item {
+            position: fixed;
+            font-weight: bold;
+            opacity: 0;
+            white-space: nowrap;
+            will-change: transform, opacity;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+        }
+        
+        /* Happy Ending Animations */
+        .happy-danmaku { text-shadow: 0 0 8px currentColor; }
+        .heart { font-size: 30px; color: var(--pink-2); }
+        @keyframes rise-and-fade {
+            0% { transform: translateY(100vh) scale(0.5); opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+        }
+        @keyframes happy-slide {
+            from { transform: translateX(-100%); opacity: 1; }
+            to { transform: translateX(100vw); opacity: 1; }
+        }
+        @keyframes happy-flash {
+             0%, 100% { opacity: 0; transform: scale(0.8); }
+             50% { opacity: 1; transform: scale(1.1); }
+        }
+
+        /* Horror Animations */
+        .horror-danmaku { text-shadow: 0 0 5px currentColor, 0 0 10px currentColor; }
+        @keyframes horror-zoom-in-out {
+            0% { transform: scale(3); opacity: 0; }
+            20% { transform: scale(1); opacity: 1; }
+            80% { opacity: 1; }
+            100% { transform: scale(0.8); opacity: 0; }
+        }
+        @keyframes horror-shake {
+            0%, 100% { transform: translateX(0); opacity: 1; }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+            20%, 40%, 60%, 80% { transform: translateX(10px); }
+            95% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        @keyframes horror-glitch-blur {
+            0% { opacity: 0; filter: blur(10px); transform: scale(1.5); }
+            20% { opacity: 1; filter: blur(0); transform: scale(1); }
+            80% { opacity: 1; filter: blur(0); transform: scale(1); }
+            100% { opacity: 0; filter: blur(10px); transform: scale(0.5); }
+        }
+        @keyframes horror-chromatic-aberration {
+            0% { text-shadow: 2px 2px 0 var(--red-2), -2px -2px 0 var(--red-5); opacity: 0; }
+            10% { opacity: 1; }
+            15% { text-shadow: -2px -2px 0 var(--red-2), 2px 2px 0 var(--red-5); }
+            20% { text-shadow: 4px 4px 0 var(--red-2), -4px -4px 0 var(--red-5); }
+            80% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        @keyframes horror-vibrate {
+            from { transform: translate(0); }
+            10% { transform: translate(-2px, -2px); } 20% { transform: translate(2px, -2px); } 30% { transform: translate(-2px, 2px); }
+            40% { transform: translate(2px, 2px); } 50% { transform: translate(-2px, -2px); } 60% { transform: translate(2px, -2px); }
+            70% { transform: translate(-2px, 2px); } 80% { transform: translate(2px, 2px); }
+            to { opacity: 0; }
+        }
+        .dense-danmaku {
+            position: fixed;
+            opacity: 1;
+            z-index: 9998;
+            font-size: 16px; /* Smaller for density */
+            animation: dense-fade-in-out 0.5s forwards;
+        }
+        @keyframes dense-fade-in-out {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+
+        .final-dialogue-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+        }
+
+        .final-dialogue-box {
+            color: var(--red-1);
+            font-size: 28px;
+            font-weight: bold;
+            text-shadow: 0 0 10px var(--red-1);
+            opacity: 0;
+            animation: fadeInText 1s forwards;
+        }
+        @keyframes fadeInText { to { opacity: 1; } }
+
+    </style>
+</head>
+<body>
+    <audio id="bgm-player" src="https://files.catbox.moe/kz61h7.mp3" loop hidden></audio>
+    <audio id="bgm-player-2" src="https://files.catbox.moe/cb2wvy.mp3" loop hidden></audio>
+    <audio id="bgm-player-happy" src="https://files.catbox.moe/f2u2ke.mp3" loop hidden></audio>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="profile-info">
+                <div class="avatar-container">
+                    <img src="https://files.catbox.moe/o6lazw.jpg" alt="祁舟头像" class="avatar">
+                    <div class="avatar-glow"></div>
+                </div>
+                <div class="user-details">
+                    <h1 class="user-name">祁舟</h1>
+                    <p class="user-id">ID: SeniTvT</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Bio & Stats -->
+        <section class="bio-section">
+            <p class="signature">幸福を渇望するのは病気だ</p>
+            <div class="stats">
+                <div class="stat"><span class="stat-number" id="followers-count"></span> 粉丝</div>
+                <div class="stat"><a href="#" class="special-follow" onclick="showSpecialFollow(event)"><span class="stat-number">1</span> 关注</a></div>
+            </div>
+        </section>
+
+        <!-- Feed -->
+        <main class="feed">
+            <!-- Post 1 -->
+            <article class="post">
+                <div class="post-header">
+                    <div class="post-avatar-container">
+                        <img src="https://files.catbox.moe/o6lazw.jpg" alt="祁舟头像" class="post-avatar">
+                        <div class="post-avatar-glow"></div>
+                    </div>
+                    <div class="post-user-info">
+                        <span class="post-user-name">祁舟</span>
+                        <span class="post-user-id">ID: SeniTvT</span>
+                    </div>
+                </div>
+                <div class="post-content">
+                    <p class="post-text">第一次吻你 是用我的眼睛<span class="user-mention">@{{user}}</span></p>
+                    <div class="post-images">
+                        <img src="https://files.catbox.moe/9iecd3.jpg" alt="自拍1" class="post-image">
+                        <img src="https://files.catbox.moe/t8wiz0.jpg" alt="自拍2" class="post-image">
+                    </div>
+                </div>
+                <footer class="post-footer">
+                    <div class="footer-action" onclick="this.lastElementChild.textContent = parseInt(this.lastElementChild.textContent) + 1">
+                        <svg viewBox="0 0 24 24"><path d="M14 20.654V23l-3.264-2.176a.75.75 0 00-.972 0L6.5 23v-2.346a9.501 9.501 0 01-4-7.654C2.5 6.813 6.64 3 11.75 3S21 6.813 21 13a9.501 9.501 0 01-4 7.654z"></path></svg>
+                        <span>34.5w</span>
+                    </div>
+                    <div class="footer-action" onclick="toggleComments('comments-1')">
+                        <svg viewBox="0 0 24 24"><path d="M18.5 4.5a.5.5 0 00-.5.5v11a.5.5 0 00.5.5h-6.82l-3.3 3.3a.5.5 0 01-.7.07.5.5 0 01-.13-.37v-2.5H5.5a.5.5 0 01-.5-.5V5a.5.5 0 01.5-.5h13z"></path></svg>
+                        <span>12.7w</span>
+                    </div>
+                    <div class="footer-action" onclick="toggleLike(this)">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></svg>
+                        <span>105.2w</span>
+                    </div>
+                </footer>
+                <div class="comments-section" id="comments-1">
+                    <!-- Comments will be injected here -->
+                </div>
+            </article>
+
+            <!-- Post 2 -->
+            <article class="post">
+                <div class="post-header">
+                     <div class="post-avatar-container">
+                        <img src="https://files.catbox.moe/o6lazw.jpg" alt="祁舟头像" class="post-avatar">
+                        <div class="post-avatar-glow"></div>
+                    </div>
+                    <div class="post-user-info">
+                        <span class="post-user-name">祁舟</span>
+                        <span class="post-user-id">ID: SeniTvT</span>
+                    </div>
+                </div>
+                <div class="post-content">
+                    <p class="post-text">窥探你不是我的本意 只是 情不自禁……<br><a href="#" class="interactive-link" onclick="startInteraction(event)">https://www.5201314.com</a></p>
+                    <div class="post-images">
+                        <img src="https://files.catbox.moe/ghfbye.jpg" alt="生活自拍" class="post-image">
+                        <img src="https://files.catbox.moe/efj41w.jpg" alt="蝴蝶发夹" class="post-image">
+                    </div>
+                </div>
+                <footer class="post-footer">
+                    <div class="footer-action" onclick="this.lastElementChild.textContent = parseInt(this.lastElementChild.textContent) + 1">
+                        <svg viewBox="0 0 24 24"><path d="M14 20.654V23l-3.264-2.176a.75.75 0 00-.972 0L6.5 23v-2.346a9.501 9.501 0 01-4-7.654C2.5 6.813 6.64 3 11.75 3S21 6.813 21 13a9.501 9.501 0 01-4 7.654z"></path></svg>
+                        <span>29.8w</span>
+                    </div>
+                    <div class="footer-action" onclick="toggleComments('comments-2')">
+                        <svg viewBox="0 0 24 24"><path d="M18.5 4.5a.5.5 0 00-.5.5v11a.5.5 0 00.5.5h-6.82l-3.3 3.3a.5.5 0 01-.7.07.5.5 0 01-.13-.37v-2.5H5.5a.5.5 0 01-.5-.5V5a.5.5 0 01.5-.5h13z"></path></svg>
+                        <span>18.1w</span>
+                    </div>
+                    <div class="footer-action" onclick="toggleLike(this)">
+                        <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path></svg>
+                        <span>131.4w</span>
+                    </div>
+                </footer>
+                <div class="comments-section" id="comments-2">
+                    <!-- Comments will be injected here -->
+                </div>
+            </article>
+
+        </main>
     </div>
-    <h2>
-      This is a bare-bones Hugo project that has everything you need to quickly deploy it to Netlify
-    </h2>
-    <div class="bttns">
-      <a href="https://app.netlify.com/start/deploy?repository=https://github.com/netlify-templates/hugo-quickstart" class="bttn primary">Deploy to Netlify</a>
-      <a href="https://github.com/netlify-templates/hugo-quickstart" class="bttn secondary">View Repo</a>
+
+    <!-- Special Follow Modal -->
+    <div id="special-follow-modal" class="modal-overlay" onclick="this.style.display='none'">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <p>特别关注：{{user}}</p>
+        </div>
     </div>
-  </div>
-  <div class="resource-list">
-    <ul>
-      <li>
-        <a href="https://ntl.fyi/3xXydGk">Netlify Blog: Hugo posts</a>
-        </li>
-      <li>
-        <a href="https://ntl.fyi/3P9w1mr">Hugo on Netlify Docs</a>
-      </li>
-      <li>
-        <a href="https://gohugo.io/documentation/">Hugo Docs</a>
-      </li>
-    </ul>
-  </div>
-</div>
-{{ end }}
+    
+    <!-- Interactive Choice Modal -->
+    <div id="choice-modal" class="choice-modal-overlay">
+        <div class="danmaku-container" id="danmaku-container"></div>
+        <div id="choice-modal-content" class="choice-modal-content">
+            <div class="plea-danmaku-container" id="plea-danmaku-container"></div>
+            <p id="choice-question" class="choice-question"></p>
+            <div id="choice-buttons" class="choice-buttons">
+                <!-- Buttons will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Final Dialogue Overlay -->
+    <div id="final-dialogue-overlay" class="final-dialogue-overlay">
+        <div id="final-dialogue-box" class="final-dialogue-box"></div>
+    </div>
+
+    <script>
+        const bgm1 = document.getElementById('bgm-player');
+        
+        // --- Page Setup & BGM Autoplay ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const followersCount = Math.floor(Math.random() * (9999 - 6000 + 1)) + 6000;
+            document.getElementById('followers-count').textContent = (followersCount / 100).toFixed(1) + 'w';
+            
+            let playPromise = bgm1.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.log("Autoplay was prevented by the browser.");
+                    document.body.addEventListener('click', () => bgm1.play(), { once: true });
+                });
+            }
+
+            generateComments();
+        });
+
+        // --- Comment Data & Generation ---
+        const femaleAvatars = ['https://files.catbox.moe/nsibqu.jpg', 'https://files.catbox.moe/egf1qi.jpg', 'https://files.catbox.moe/kark85.png', 'https://files.catbox.moe/fbnmq0.jpg'];
+        const maleAvatars = ['https://files.catbox.moe/bvkgvh.jpg', 'https://files.catbox.moe/j7aq17.jpg', 'https://files.catbox.moe/1kjxhn.jpg', 'https://files.catbox.moe/anzv81.jpg'];
+        const commentsData1 = [
+            { user: "舟舟我的光", text: "啊啊啊啊啊啊啊哥哥的眼睛太会了！我可以溺死在你的眼神里吗！！！", avatar: femaleAvatars[0] }, { user: "祁副队今天也很帅", text: "这真的是我能免费看的吗？这张脸是艺术品吧！", avatar: femaleAvatars[1] }, { user: "想做祁舟的抑制剂", text: "这个@ 是给谁的呜呜呜，我好羡慕，我也想被哥哥用眼睛亲吻T_T", avatar: femaleAvatars[2] }, { user: "豹耳收藏家", text: "我没了，兄弟们。这谁顶得住啊？", avatar: femaleAvatars[3] }, { user: "祁舟的作战服", text: "救命，这完美的下颌线，这深邃的眼神，我可以！我真的可以！", avatar: femaleAvatars[0] }, { user: "Seni是我老公", text: "每天都在为祁舟的美貌失声尖叫，今天也是！", avatar: femaleAvatars[1] }, { user: "今天也很爱祁舟", text: "宝贝你多发点自拍好不好，求求了，我给你磕头了砰砰砰！", avatar: femaleAvatars[2] }, { user: "奶油小豹", text: "这个拍照角度也太绝了，显得哥哥又纯又欲，想……", avatar: femaleAvatars[3] }, { user: "祁舟Sama", text: "羡慕那个{{user}}，能被这么好看的人喜欢，上辈子拯救了银河系吧！", avatar: femaleAvatars[0] }, { user: "E-k小队观察员", text: "又是为副队长心动的一天。完美。", avatar: femaleAvatars[1] }, { user: "爱舟信舟等舟", text: "哥哥的眼睛里有星星！不，是有整个宇宙！", avatar: femaleAvatars[2] }
+        ];
+        const commentsData2 = [
+            { user: "想做祁舟的抑制剂", text: "第二张图……是发夹？好可爱的蝴蝶发夹，是哥哥的吗？有点反差萌hhh", avatar: femaleAvatars[0] }, { user: "舟舟我的光", text: "哥哥你又在看什么！快看看我！这湿漉漉的眼神我真的会疯掉！", avatar: femaleAvatars[1] }, { user: "E-k小队-李响", text: "副队，你这发夹……哪来的？你房间里怎么会有这个？", avatar: maleAvatars[0] }, { user: "医疗部-王医生", text: "祁舟，又在胡思乱想了？精神图景还好吗？别忘了按时吃抑制剂。", avatar: maleAvatars[1] }, { user: "祁序", text: "……", avatar: maleAvatars[2] }, { user: "Seni是我老公", text: "回复@祁序：？？？正主来了？这是什么修罗场预告吗？", avatar: femaleAvatars[2] }, { user: "梁简雾", text: "哼，装模作样。", avatar: maleAvatars[3] }, { user: "E-k小队观察员", text: "我怎么感觉这条动态下面暗流涌动的……是我的错觉吗？", avatar: femaleAvatars[3] }, { user: "宋渝声", text: "哟，这不是我们完美的祁副队吗？又在玩什么深情人设呢？这发夹，不会是偷的吧？", avatar: maleAvatars[0] }, { user: "技术部-小赵", text: "那个……副队，你发的这个链接，我点进去怎么是404？是我网络问题吗？", avatar: maleAvatars[1] }, { user: "吃瓜路人", text: "楼上上的信息量好大，我先搬个板凳坐好。所以这个发夹到底是谁的？", avatar: femaleAvatars[0] }, { user: "今天也很爱祁舟", text: "虽然不知道发生了什么，但是哥哥好帅，哥哥做什么都是对的！", avatar: femaleAvatars[1] }
+        ];
+
+        function createCommentElement(comment) { return `<div class="comment"><img src="${comment.avatar}" alt="用户头像" class="comment-avatar"><div class="comment-body"><span class="comment-user-name">${comment.user}</span><p class="comment-text">${comment.text}</p></div></div>`; }
+        function generateComments() {
+            const c1 = document.getElementById('comments-1');
+            const c2 = document.getElementById('comments-2');
+            c1.innerHTML = commentsData1.map(createCommentElement).join('') + `<div class="comment-input-area"><input type="text" class="comment-input" placeholder="添加评论..."><button class="comment-submit-btn">发送</button></div>`;
+            c2.innerHTML = commentsData2.map(createCommentElement).join('') + `<div class="comment-input-area"><input type="text" class="comment-input" placeholder="添加评论..."><button class="comment-submit-btn">发送</button></div>`;
+        }
+
+        // --- UI Interactions ---
+        function showSpecialFollow(event) { event.preventDefault(); document.getElementById('special-follow-modal').style.display = 'flex'; }
+        function toggleLike(element) {
+            element.classList.toggle('liked');
+            const countSpan = element.querySelector('span');
+            let count = parseFloat(countSpan.textContent) * 10000;
+            count += element.classList.contains('liked') ? 1 : -1;
+            countSpan.textContent = (count / 10000).toFixed(1) + 'w';
+        }
+        function toggleComments(commentId) { const cs = document.getElementById(commentId); cs.style.display = cs.style.display === 'block' ? 'none' : 'block'; }
+
+        // --- Interactive Link Logic ---
+        const choiceModal = document.getElementById('choice-modal');
+        const choiceModalContent = document.getElementById('choice-modal-content');
+        const questionEl = document.getElementById('choice-question');
+        const buttonsEl = document.getElementById('choice-buttons');
+        const bgm2 = document.getElementById('bgm-player-2');
+        const bgmHappy = document.getElementById('bgm-player-happy');
+        const danmakuContainer = document.getElementById('danmaku-container');
+        let pleaInterval, mainInterval;
+        
+        function startInteraction(event) {
+            event.preventDefault();
+            choiceModal.style.display = 'flex';
+            showQuestion1();
+        }
+
+        function showQuestion1() {
+            choiceModalContent.className = 'choice-modal-content';
+            questionEl.textContent = '{{user}}，你也喜欢祁舟对不对？';
+            buttonsEl.innerHTML = `<button id="choice-btn-like" class="choice-btn" onclick="handleLikeClick()">喜欢</button><button class="choice-btn" onclick="handleDislikeClick()">不喜欢</button>`;
+        }
+
+        function handleLikeClick() {
+            clearInterval(pleaInterval);
+            document.getElementById('plea-danmaku-container').innerHTML = '';
+            showQuestion2();
+        }
+        
+        function handleDislikeClick() {
+            const likeBtn = document.getElementById('choice-btn-like');
+            likeBtn.classList.add('enlarge');
+            if (!pleaInterval) {
+                const pContainer = document.getElementById('plea-danmaku-container');
+                const pleas = ["{{user}}", "……", "喜欢", "你点喜欢，好不好？", "求你了…", "T^T"];
+                const gifs = ['https://files.catbox.moe/outz25.gif', 'https://files.catbox.moe/bp1rg9.gif'];
+                pleaInterval = setInterval(() => {
+                    pContainer.innerHTML = '';
+                    const pText = pleas[Math.floor(Math.random() * pleas.length)];
+                    const tEl = document.createElement('div');
+                    tEl.className = 'plea-danmaku-item';
+                    tEl.textContent = pText;
+                    Object.assign(tEl.style, {left: `${Math.random()*80}%`, top: `${Math.random()*80}%`, fontSize: `${16+Math.random()*10}px`, color: Math.random() > 0.5 ? '#FFF' : '#FFC0CB', animationDuration: `${1.5+Math.random()}s`});
+                    pContainer.appendChild(tEl);
+                    if (Math.random() > 0.6) {
+                        const gifEl = document.createElement('img');
+                        gifEl.src = gifs[Math.floor(Math.random() * gifs.length)];
+                        gifEl.className = 'plea-danmaku-item gif';
+                        Object.assign(gifEl.style, {left: `${Math.random()*70}%`, top: `${Math.random()*30}%`, animationDuration: `${1.5+Math.random()}s`});
+                        pContainer.appendChild(gifEl);
+                    }
+                }, 700);
+            }
+        }
+
+        function showQuestion2() {
+            choiceModalContent.className = 'choice-modal-content';
+            questionEl.className = 'choice-question';
+            questionEl.textContent = '{{user}}，我们永远不分离，好不好？';
+            buttonsEl.innerHTML = `<button class="choice-btn" onclick="triggerHappyEnding()">好</button><button class="choice-btn" onclick="triggerMeltdown()">不行</button>`;
+        }
+        
+        function triggerHappyEnding() {
+            bgm1.pause();
+            bgmHappy.currentTime = 0;
+            bgmHappy.play();
+            
+            // Make the modal disappear to show danmaku clearly
+            choiceModalContent.style.opacity = '0';
+            
+            const happyTexts = [
+                '我们终于在一起了', '我好爱你', '{{user}}...', '永远...永远', '你是我的了', 
+                '我好开心', '我的宝贝', '不会再让你离开', '我等这一天很久了', '你是我的光',
+                '连你的呼吸都是甜的', '你的味道，是我唯一的解药', '以后每天都能看到你了',
+                '终于...可以光明正大地吻你了'
+            ];
+            const happyAnims = ['happy-slide', 'happy-flash'];
+
+            mainInterval = setInterval(() => {
+                const textItem = document.createElement('div');
+                textItem.className = 'danmaku-item happy-danmaku';
+                textItem.textContent = happyTexts[Math.floor(Math.random() * happyTexts.length)];
+                textItem.style.color = Math.random() > 0.5 ? 'var(--pink-1)' : '#FFFFFF';
+                textItem.style.fontSize = `${20 + Math.random() * 20}px`;
+                
+                const chosenAnim = happyAnims[Math.floor(Math.random() * happyAnims.length)];
+                let duration;
+                if (chosenAnim === 'happy-slide') {
+                    duration = 6 + Math.random() * 4;
+                    textItem.style.top = `${Math.random() * 90}vh`;
+                } else { // happy-flash
+                    duration = 1 + Math.random() * 1.5;
+                    textItem.style.top = `${20 + Math.random() * 60}vh`;
+                    textItem.style.left = `${20 + Math.random() * 60}vw`;
+                }
+                textItem.style.animationName = chosenAnim;
+                textItem.style.animationDuration = `${duration}s`;
+                danmakuContainer.appendChild(textItem);
+                setTimeout(() => textItem.remove(), duration * 1000);
+
+                if (Math.random() > 0.3) {
+                    const heartItem = document.createElement('div');
+                    heartItem.className = 'danmaku-item heart';
+                    heartItem.innerHTML = '❤';
+                    heartItem.style.left = `${Math.random() * 95}vw`;
+                    heartItem.style.animationName = 'rise-and-fade';
+                    const heartDuration = 4 + Math.random() * 4;
+                    heartItem.style.animationDuration = `${heartDuration}s`;
+                    danmakuContainer.appendChild(heartItem);
+                    setTimeout(() => heartItem.remove(), heartDuration * 1000);
+                }
+            }, 200);
+
+            setTimeout(() => {
+                resetState();
+                choiceModal.style.display = 'none';
+                bgmHappy.pause();
+                bgm1.play();
+                choiceModalContent.style.opacity = '1';
+            }, 25000);
+        }
+
+        function triggerMeltdown() {
+            bgm1.pause();
+            bgm2.currentTime = 0;
+            bgm2.play();
+
+            questionEl.textContent = '真的不愿意和祁舟在一起吗？我好伤心啊，{{user}}';
+            questionEl.className = 'choice-question sad-intro-text';
+            choiceModalContent.className = 'choice-modal-content sad-intro-box';
+            buttonsEl.innerHTML = '';
+            
+            setTimeout(() => {
+                const redColors = ['#DC1F33', '#D11D30', '#CA1D30', '#E52034', '#F22439'];
+                const allHorrorTexts = [
+                    '喜欢你', '好喜欢你', '会吃掉你所有的眼泪', '视线不能从你身上移开', '你是我的', 
+                    '我会让你永远离不开我', '你只属于我', '我会永远占有你生生世世', '跑吧', '我爱你', 
+                    '没有你我会死的', '^_^', '恨我吧', '你又凭什么讨厌我', '你别想甩掉我', '只有我最爱你了',
+                    '你的味道…好香', '为什么不看着我', '你的眼睛真漂亮', '把它给我好不好', '把你的骨头做成项链',
+                    '永远看着你', '你的血一定很甜', '别怕 我会很温柔', '祁序？他很快就不存在了',
+                    '你只能属于我，哪怕是尸体', '我会挖掉所有偷看你的眼睛', '你的每一根头发都是我的',
+                    '还想跑去哪？', '嘘...别出声', '这样我们就永远在一起了', '别看他，看我', '你笑起来真好看...多笑笑'
+                ];
+                const animations = ['horror-zoom-in-out', 'horror-shake', 'horror-glitch-blur', 'horror-chromatic-aberration', 'horror-vibrate'];
+                
+                let denseWaveChance = 0.02; // Initial chance for a dense wave
+                const denseWaveIncrement = 0.01; // How much the chance increases each time
+
+                mainInterval = setInterval(() => {
+                    // Dense Wave Trigger
+                    if (Math.random() < denseWaveChance) {
+                        const waveContainer = document.createElement('div');
+                        for (let i = 0; i < 200; i++) { // Create 200 items for density
+                            const item = document.createElement('div');
+                            item.className = 'dense-danmaku';
+                            item.textContent = allHorrorTexts[Math.floor(Math.random() * allHorrorTexts.length)];
+                            item.style.color = redColors[Math.floor(Math.random() * redColors.length)];
+                            item.style.top = `${Math.random() * 100}vh`;
+                            item.style.left = `${Math.random() * 100}vw`;
+                            waveContainer.appendChild(item);
+                        }
+                        danmakuContainer.appendChild(waveContainer);
+                        setTimeout(() => waveContainer.remove(), 500); // Wave lasts for 0.5s
+                        denseWaveChance += denseWaveIncrement; // Increase chance for next time
+                    }
+
+                    // Regular danmaku
+                    const item = document.createElement('div');
+                    item.className = 'danmaku-item horror-danmaku';
+                    const chosenAnim = animations[Math.floor(Math.random() * animations.length)];
+                    let duration = 0.5 + Math.random() * 1.5;
+                    item.style.animationName = chosenAnim;
+                    item.style.animationDuration = `${duration}s`;
+                    item.textContent = allHorrorTexts[Math.floor(Math.random() * allHorrorTexts.length)];
+                    item.style.color = redColors[Math.floor(Math.random() * redColors.length)];
+                    item.style.fontSize = `${25 + Math.random() * 50}px`;
+                    item.style.top = `${10 + Math.random() * 80}vh`;
+                    item.style.left = `${10 + Math.random() * 80}vw`;
+                    danmakuContainer.appendChild(item);
+                    setTimeout(() => item.remove(), duration * 1000);
+                }, 150);
+
+                setTimeout(showFinalDialogues, 30000);
+            }, 3000);
+        }
+
+        async function showFinalDialogues() {
+            const dOverlay = document.getElementById('final-dialogue-overlay');
+            const dBox = document.getElementById('final-dialogue-box');
+            dOverlay.style.display = 'flex';
+            
+            const showText = (text, delay) => new Promise(resolve => {
+                setTimeout(() => {
+                    dBox.style.opacity = '0';
+                    setTimeout(() => { dBox.textContent = text; resolve(); }, 500);
+                }, delay);
+            });
+
+            await showText('{{user}}，真是不乖呢', 1000);
+            await showText('选我好不好', 2000);
+            await showText('再给你一次机会', 2000);
+
+            setTimeout(() => {
+                dOverlay.style.display = 'none';
+                choiceModalContent.style.opacity = '1';
+                choiceModalContent.className = 'choice-modal-content';
+                questionEl.className = 'choice-question';
+                questionEl.textContent = '';
+                buttonsEl.innerHTML = `<button id="final-choice-btn" class="choice-btn" onclick="makeFinalChoice()">好</button>`;
+                
+                const pleaTexts = ['快选好呀', '选好', '求你了', '别让我等太久...', '^_^', '就点一下', '按下去'];
+                 // Keep the horror interval but add plea danmaku on top
+                const finalPleaInterval = setInterval(() => {
+                    const item = document.createElement('div');
+                    item.className = 'danmaku-item horror-danmaku';
+                    item.textContent = pleaTexts[Math.floor(Math.random() * pleaTexts.length)];
+                    item.style.color = '#FFFFFF';
+                    item.style.fontSize = `${20 + Math.random() * 20}px`;
+                    item.style.animationName = 'horror-zoom-in-out';
+                    const duration = 1.5 + Math.random();
+                    item.style.animationDuration = `${duration}s`;
+                    item.style.top = `${20 + Math.random() * 60}vh`;
+                    item.style.left = `${20 + Math.random() * 60}vw`;
+                    danmakuContainer.appendChild(item);
+                    setTimeout(() => item.remove(), duration * 1000);
+                }, 500);
+                mainInterval = [mainInterval, finalPleaInterval]; // Store both intervals
+            }, 2000);
+        }
+
+        function makeFinalChoice() {
+            questionEl.textContent = "^_^";
+            buttonsEl.innerHTML = '';
+            setTimeout(() => {
+                resetState();
+                choiceModal.style.display = 'none';
+                bgm2.pause();
+                bgm1.currentTime = 0;
+                bgm1.play();
+            }, 3000);
+        }
+
+        function resetState() {
+            clearInterval(pleaInterval);
+            if (Array.isArray(mainInterval)) {
+                mainInterval.forEach(clearInterval);
+            } else {
+                clearInterval(mainInterval);
+            }
+            pleaInterval = null;
+            mainInterval = null;
+            danmakuContainer.innerHTML = '';
+            document.getElementById('plea-danmaku-container').innerHTML = '';
+            choiceModalContent.className = 'choice-modal-content';
+            questionEl.className = 'choice-question';
+            const likeBtn = document.getElementById('choice-btn-like');
+            if (likeBtn) likeBtn.classList.remove('enlarge');
+        }
+    </script>
+</body>
+</html>
+```
